@@ -62,7 +62,9 @@ export class RegisterComponent {
     }
     this.http.post(url, user)
       .subscribe(response =>{
-
+        
+      }, error =>{
+        console.log(error);
       });
     console.log("ab");
   }
