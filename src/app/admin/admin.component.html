@@ -1,0 +1,66 @@
+<input type="text" (keyup)="viewProductListByName()" placeholder="Search Product By Name" [(ngModel)]="input">
+<input type="text" (keyup)="viewProductListByID()" placeholder="Search Product By ID" [(ngModel)]="input">
+
+<button (click)="showAddProduct()"> Add Product</button>
+@if(_showAddProduct){
+    <form [formGroup]="form" (ngSubmit)="addProduct()">
+        <div class="form-group">
+            <label for="productName">productName</label>
+            <input 
+                formControlName="productName"
+                id="productName" 
+                type="text" 
+                class="form-control">
+            <div *ngIf="productName?.touched && productName?.invalid" class="alert alert-danger"> productName is Invalid</div>
+        </div>
+
+        <div class="form-group">
+            <label for="price">price</label>
+            <input required
+                formControlName="price"
+                id="price" 
+                type="text" 
+                class="form-control">
+            <div *ngIf="price?.touched && price?.invalid" class="alert alert-danger"> price is Invalid</div>
+        </div>
+
+        <div class="form-group">
+            <label for="type">type</label>
+            <input 
+                formControlName="type"
+                id="type" 
+                type="text" 
+                class="form-control">
+            <div *ngIf="type?.touched && type?.invalid" class="alert alert-danger"> type is Invalid</div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageLink">imageLink</label>
+            <input 
+                formControlName="imageLink"
+                id="imageLink" 
+                type="text" 
+                class="form-control">
+            <div *ngIf="imageLink?.touched && imageLink?.invalid" class="alert alert-danger"> imageLink is Invalid</div>
+        </div>
+        <select>
+            @for(item of items; track $index){
+                <option>item.id</option>
+            }
+        </select>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+}
+<div
+    *ngFor="let product of products">
+        
+        <div>
+            <p>id: {{product.id}}</p>
+            <p>name: {{product.name}}</p>
+            <p>price: {{product.price}}</p>
+            <button (click)="deleteProduct(product.id)">Delete</button>
+            <!-- <button (click)="AddCategory(product.id)">Add Category</button> -->
+            <button > Edit Product</button>
+        </div>
+</div>

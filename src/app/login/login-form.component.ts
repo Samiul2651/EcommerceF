@@ -1,15 +1,20 @@
+import { AuthService } from './../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
-  selector: 'signup-form',
-  templateUrl: './signup-form.component.html',
-  styleUrls: ['./signup-form.component.css']
+  selector: 'login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css']
 })
-export class SignupFormComponent {
+export class LoginComponent {
   
-  constructor(private http: HttpClient){}
+  constructor(
+    private customerService : CustomerService,
+    private authService : AuthService
+  ){}
   url = "https://localhost:7276/api/";
   form = new FormGroup({
     email: new FormControl('',[
@@ -38,9 +43,20 @@ export class SignupFormComponent {
   }
 
   login(){
-    let getUrl = this.url+'Customer/login/'+this.email?.value+'/'+this.password?.value;
-    console.log(getUrl);
-    this.http.get(getUrl)
+    // let getUrl = this.url+'Customer/login/'+this.email?.value+'/'+this.password?.value;
+    // console.log(getUrl);
+    let userEmail = this.email?.value;
+    if(userEmail == null)userEmail = "";
+    let userPassword = this.password?.value;
+    if(userPassword == null)userPassword = "";
+    let user = {
+      id : '',
+      name : '',
+      email : userEmail,
+      password : userPassword
+
+    }
+    this.authService.login(user)
       .subscribe(response => {
         console.log(response);
       }, (error : Response) =>{

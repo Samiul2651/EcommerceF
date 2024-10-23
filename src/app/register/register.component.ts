@@ -1,6 +1,9 @@
+import { CustomerService } from './../services/customer.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +11,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  constructor(private http: HttpClient){}
+  constructor(
+    // private http: HttpClient,
+    private customerService : CustomerService,
+    private authService : AuthService
+  ){}
 
   @Output() loginEvent = new EventEmitter();
   form = new FormGroup({
@@ -53,19 +60,20 @@ export class RegisterComponent {
     if(this.email?.value != this.confirmEmail?.value){
       alert("Email Not Matched");
     }
-    let url = "https://localhost:7276/api/Customer";
-    let user = {
+    // let url = "https://localhost:7276/api/Customer";
+    let user : User = {
       id : "",
       name : this.name?.value,
       email : this.email?.value,
       password : this.password?.value
     }
-    this.http.post(url, user)
+    this.authService.register(user)
       .subscribe(response =>{
-        
+        alert("Registration Successfull");
       }, error =>{
-        console.log(error);
+        // console.log(error);
+        alert("Registration Error");
       });
-    console.log("ab");
+    // console.log("ab");
   }
 }

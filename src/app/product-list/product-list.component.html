@@ -1,1 +1,19 @@
-<button (click)="getProducts()">Get Products</button>
+<button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button>
+<input type="text" (keyup)="ViewProductList()" placeholder="Search Product" [(ngModel)]="input">
+
+<div>
+    <!-- *ngFor="let product of products"> -->
+    @for (product of products; track $index;){ 
+        <div class="card">
+            
+            <h1>{{product.name}}</h1>
+            <p class="price">${{product.price}}</p>
+            <div>
+                <p>
+                    <button (click)="addProductToCart(product.id)">Add to Cart</button>
+                </p>
+            </div>
+        </div>
+    }
+</div>
+<!-- </div> -->

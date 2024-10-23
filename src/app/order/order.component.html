@@ -1,1 +1,35 @@
-<p>order works!</p>
+
+<body>
+    <div class="container">
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>SubTotal</th>
+              </tr>
+              <tr *ngFor="let product of orders">
+                <td>{{product.name}}
+                    <button (click)="RemoveProductFromCart(product)">Remove</button>
+                </td>
+                <td>{{product.price}}</td>
+                <td>
+                    <p><button (click)="DecreaseQuantity(product)" class="minus" aria-label="Decrease">&minus;</button>
+                    {{product.quantity}}
+                    <button (click)="IncreaseQuantity(product)" class="plus" aria-label="Increase">&plus;</button>
+                    </p>
+                </td>
+                <td><p>${{product.quantity * product.price}}</p></td>
+              </tr>
+        </table>
+
+        <div>
+            <p>Total : {{sum}}</p>
+        </div>
+
+        <a routerLink="/payment" routerLinkActive="active" ariaCurrentWhenActive="page">CheckOut</a>
+    </div>
+
+</body>
+

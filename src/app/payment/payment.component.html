@@ -1,1 +1,53 @@
-<p>payment works!</p>
+
+<form [formGroup]="form" (ngSubmit)="takeOrder()">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+            formControlName="name"
+            id="name" 
+            type="text" 
+            class="form-control">
+        <div *ngIf="name?.touched && name?.invalid" class="alert alert-danger"> Name is Required</div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+            formControlName="email"
+
+            id="email" 
+            type="text" 
+            class="form-control">
+        <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
+            <div *ngIf="email?.errors?.['required']">Email is required</div>
+            <div *ngIf="email?.errors?.['email']">Email is invalid</div>
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input 
+            formControlName="mobile"
+            id="mobile" 
+            type="text" 
+            class="form-control">
+        <div *ngIf="mobile?.touched && mobile?.invalid" class="alert alert-danger">Mobile Number is Required</div>
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input 
+            formControlName="address"
+            id="address" 
+            type="text" 
+            class="form-control">
+        <div *ngIf="address?.touched && address?.invalid" class="alert alert-danger">Address is Required</div>
+    </div>
+    <select> 
+        <option>Cash On Delivery</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+
+
+<!-- <br>
+<button>Place Order</button> -->
