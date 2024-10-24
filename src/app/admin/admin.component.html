@@ -52,15 +52,69 @@
 
     </form>
 }
-<div
-    *ngFor="let product of products">
-        
-        <div>
-            <p>id: {{product.id}}</p>
-            <p>name: {{product.name}}</p>
-            <p>price: {{product.price}}</p>
-            <button (click)="deleteProduct(product.id)">Delete</button>
-            <!-- <button (click)="AddCategory(product.id)">Add Category</button> -->
-            <button > Edit Product</button>
+@if(_showAllProduct){
+    <div
+        *ngFor="let product of products">
+            <div>
+                <p>id: {{product.id}}</p>
+                <p>name: {{product.name}}</p>
+                <p>price: {{product.price}}</p>
+                <button (click)="deleteProduct(product.id)">Delete</button>
+                <!-- <button (click)="AddCategory(product.id)">Add Category</button> -->
+                <button (click)="showEditProduct(product)" > Edit Product</button>
+            </div>
+    </div>
+}
+@else {
+    <form [formGroup]="form" (ngSubmit)="editProduct()">
+        <div class="form-group">
+            <label for="productName">productName</label>
+            <input 
+                formControlName="productName"
+                id="productName" 
+                type="text" 
+                class="form-control" [ngModel]="productToEdit.name">
+            <div *ngIf="productName?.touched && productName?.invalid" class="alert alert-danger"> productName is Invalid</div>
         </div>
-</div>
+
+        <div class="form-group">
+            <label for="price">price</label>
+            <input required
+                formControlName="price"
+                id="price" 
+                type="text" 
+                class="form-control"
+                [ngModel]="productToEdit.price">
+            <div *ngIf="price?.touched && price?.invalid" class="alert alert-danger"> price is Invalid</div>
+        </div>
+
+        <div class="form-group">
+            <label for="type">type</label>
+            <input 
+                formControlName="type"
+                id="type" 
+                type="text" 
+                class="form-control"
+                [ngModel]="productToEdit.type">
+            <div *ngIf="type?.touched && type?.invalid" class="alert alert-danger"> type is Invalid</div>
+        </div>
+
+        <div class="form-group">
+            <label for="imageLink">imageLink</label>
+            <input 
+                formControlName="imageLink"
+                id="imageLink" 
+                type="text" 
+                class="form-control"
+                [ngModel]="productToEdit.imageLink">
+            <div *ngIf="imageLink?.touched && imageLink?.invalid" class="alert alert-danger"> imageLink is Invalid</div>
+        </div>
+        <select>
+            @for(item of items; track $index){
+                <option>item.id</option>
+            }
+        </select>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+}

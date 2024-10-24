@@ -30,4 +30,12 @@ export class ProductService {
   addProduct(product : Product){
     return this.http.post(this.url, product);
   }
+
+  getCategories(){
+    return this.http.get(this.url+"categories")
+  }
+
+  editProduct(product : Product){
+    return this.http.put(this.url, product);
+  }
 }

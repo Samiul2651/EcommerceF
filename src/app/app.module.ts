@@ -13,6 +13,7 @@ import { OrderComponent } from './order/order.component';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { ProductService } from './services/product.service';
+import { ShowSmallErrorComponent } from './show-small-error/show-small-error.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProductService } from './services/product.service';
     ProductListComponent,
     PaymentComponent,
     OrderComponent,
-    AdminComponent
+    AdminComponent,
+    ShowSmallErrorComponent
   ],
   imports: [
     BrowserModule,

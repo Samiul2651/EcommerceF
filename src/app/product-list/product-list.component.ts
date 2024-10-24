@@ -28,7 +28,12 @@ export class ProductListComponent implements OnInit {
           if(quantity)product.quantity = Number(quantity);
           else product.quantity = 0;
         })
-      })  
+      })
+      
+    this.productService.getCategories()
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 
   ViewProductList(){

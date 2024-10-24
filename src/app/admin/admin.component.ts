@@ -56,6 +56,7 @@ export class AdminComponent implements OnInit {
   }
   
   _showAddProduct : boolean = false;
+  _showAllProduct : boolean = true;
   
   ngOnInit(): void {
     this.http.get(this.url + 'getProducts/1')
@@ -121,6 +122,10 @@ export class AdminComponent implements OnInit {
     this._showAddProduct = !this._showAddProduct;
   }
 
+  showAllProduct(){
+    this._showAllProduct = !this._showAllProduct;
+  }
+
   addProduct(){
     let productName : string = '';
     let productPrice : number = 0;
@@ -144,8 +149,48 @@ export class AdminComponent implements OnInit {
     this.productService.addProduct(product)
       .subscribe(response => {
         console.log(response);
+        this.showAddProduct();
+        this.viewProductListByName();
       })
   }
 
+  productToEdit : Product = {
+    id : '',
+    name : '',
+    price : 0,
+    type : '',
+    imageLink : '',
+    trendingScore : 0,
+    category : '',
+    quantity : 0
+  };
+  editProduct(){
+    this.showAllProduct();
+    // console.log(this.productToEdit);
+    this.productToEdit.category = '';
+    let productName : string = this.productToEdit.name;
+    let productPrice : number = this.productToEdit.price;
+    let productType : string = this.productToEdit.type;
+    let productImageLink : string = this.productToEdit.imageLink;
+    if(this.productName?.value) productName = this.productName.value;
+    if(this.price?.value)productPrice = Number(this.price.value);
+    if(this.type?.value)productType = this.type.value;
+    if(this.imageLink?.value)productImageLink = this.imageLink.value;
+    this.productToEdit.name = productName;
+    this.productToEdit.price = productPrice;
+    this.productToEdit.type = productType;
+    this.productToEdit.imageLink = productImageLink;
+    this.productService.editProduct(this.productToEdit)
+      .subscribe(response => {
+        console.log(response);
+        this.viewProductListByName();
+      })
+    
+  }
+  
+  showEditProduct(product : Product){
+    this._showAllProduct = !this._showAllProduct;
+    this.productToEdit = product
+  }
 
 }
