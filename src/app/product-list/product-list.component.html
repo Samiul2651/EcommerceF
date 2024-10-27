@@ -2,6 +2,16 @@
 <input type="text" (keyup)="ViewProductList()" placeholder="Search Product" [(ngModel)]="input">
 
 <div>
+    @for(category of categories;track $index;){
+        <div>
+            <p>
+                <button (click)="showProductsByCategory(category.id)">{{category.name}}</button>
+            </p>
+        </div>
+    }
+</div>
+
+<div>
     <!-- *ngFor="let product of products"> -->
     @for (product of products; track $index;){ 
         <div class="card">

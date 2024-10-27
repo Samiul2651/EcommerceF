@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit {
   ){}
   products: Product[] = [];
   showOrder: boolean = false;
-  
+  categories : any[] = [];
   input:string = '';
 
   ngOnInit(): void {
@@ -30,9 +30,10 @@ export class ProductListComponent implements OnInit {
         })
       })
       
-    this.productService.getCategories()
-      .subscribe(response => {
+    this.productService.getRootCategories()
+      .subscribe((response : any) => {
         console.log(response);
+        this.categories = response;
       });
   }
 
@@ -74,6 +75,23 @@ export class ProductListComponent implements OnInit {
     if(product) product.quantity = currentQuantity;
     // console.log(product?.order + " " + product?.price);
     alert(product?.name + " Added to Cart");
+  }
+
+  showProductsByCategory(categoryId : string){
+    console.log(categoryId);
+    this.productService.getProductsByCategory(categoryId, 1)
+      .subscribe((response : any) => {
+        this.products = response;
+        this.showCategoryByParent(categoryId);
+      });
+  }
+
+  showCategoryByParent(categoryId : string){
+    this.categories = [];
+    this.productService.getCategoryByParent(categoryId)
+      .subscribe((response : any) =>{
+        this.categories = response;
+      });
   }
 }
 

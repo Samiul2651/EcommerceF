@@ -35,7 +35,19 @@ export class ProductService {
     return this.http.get(this.url+"categories")
   }
 
+  getRootCategories(){
+    return this.http.get(this.url+"rootCategories")
+  }
+
   editProduct(product : Product){
     return this.http.put(this.url, product);
+  }
+
+  getProductsByCategory(categoryId : string, page : number){
+    return this.http.get(this.url+"productsByCategory/"+categoryId+"/"+page);
+  }
+
+  getCategoryByParent(categoryId : string){
+    return this.http.get(this.url+"getCategoryByParent/" + categoryId);
   }
 }

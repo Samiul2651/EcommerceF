@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { ProductService } from './services/product.service';
 import { ShowSmallErrorComponent } from './show-small-error/show-small-error.component';
+import { AuthService } from './services/auth.service';
+import { CustomerService } from './services/customer.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ShowSmallErrorComponent } from './show-small-error/show-small-error.com
   ],
   providers: [
     provideHttpClient(),
-    ProductService
+    ProductService,
+    AuthService,
+    CustomerService
   ],
   bootstrap: [AppComponent]
 })
