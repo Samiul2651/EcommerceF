@@ -1,56 +1,73 @@
-<button><a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></button>
-
+<!-- <button><a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></button> -->
+<body>
+<div class="wrapper">
 <form [formGroup]="form" (ngSubmit)="register()">
     <div class="form-group">
-        <label for="name">Name</label>
-        <input 
-            formControlName="name"
+        <!-- <label for="name">Name</label> -->
+        <div class="input-box">
+            <input 
+                formControlName="name"
 
-            id="name" 
-            type="text" 
-            class="form-control">
-        <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
-            <div *ngIf="email?.errors?.['required']">Name is required</div>
-            
+                id="name" 
+                type="text" 
+                class="form-control"
+                placeholder="Name">
+            <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
+                <div *ngIf="email?.errors?.['required']">Name is required</div>
+                
+            </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-            formControlName="email"
+        <!-- <label for="email">Email</label> -->
+        <div class="input-box">
+            <input 
+                formControlName="email"
 
-            id="email" 
-            type="text" 
-            class="form-control">
-        <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
-            <div *ngIf="email?.errors?.['required']">Email is required</div>
-            <div *ngIf="email?.errors?.['email']">Email is invalid</div>
-            
+                id="email" 
+                type="text" 
+                class="form-control"
+                placeholder="Email">
+            <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
+                <div *ngIf="email?.errors?.['required']">Email is required</div>
+                <div *ngIf="email?.errors?.['email']">Email is invalid</div>
+                
+            </div>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="confirmEmail">Confirm Email</label>
-        <input 
-            formControlName="confirmEmail"
-
-            id="confirmEmail" 
-            type="text" 
-            class="form-control">
-        <div *ngIf="confirmEmail?.touched && email?.invalid" class="alert alert-danger">
-            <div *ngIf="confirmEmail?.errors?.['required']">Email is required</div>
-            <div *ngIf="confirmEmail?.errors?.['email']">Email is invalid</div>
-            
+        <!-- <label for="confirmEmail">Confirm Email</label> -->
+        <div class="input-box">
+            <input 
+                formControlName="confirmEmail"
+                id="confirmEmail" 
+                type="text" 
+                class="form-control"
+                placeholder="Confirm Email">
+            <div *ngIf="confirmEmail?.touched && email?.invalid" class="alert alert-danger">
+                <div *ngIf="confirmEmail?.errors?.['required']">Email is required</div>
+                <div *ngIf="confirmEmail?.errors?.['email']">Email is invalid</div>
+                
+            </div>
         </div>
+        
     </div>
     <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-            formControlName="password"
-            id="password" 
-            type="text" 
-            class="form-control">
-        <div *ngIf="password?.touched && password?.invalid" class="alert alert-danger"> Password is Invalid</div>
+        <!-- <label for="password">Password</label> -->
+        <div class="input-box">
+            <input 
+                formControlName="password"
+                id="password" 
+                type="text" 
+                class="form-control"
+                placeholder="Password">
+            <div *ngIf="password?.touched && password?.invalid" class="alert alert-danger"> Password is Invalid</div>
+        </div>
     </div>
-    <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn" type="submit">Register</button>
 </form>
+<br>
+<button class="btn" id="login"><a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></button>
+</div>
+</body>

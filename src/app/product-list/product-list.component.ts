@@ -20,6 +20,7 @@ export class ProductListComponent implements OnInit {
   input:string = '';
 
   ngOnInit(): void {
+    console.log(localStorage.getItem("user"));
     this.productService.getProductsByPage(1)
       .subscribe((response : any) =>{
         this.products = response.products;

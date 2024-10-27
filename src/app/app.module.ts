@@ -16,6 +16,7 @@ import { ProductService } from './services/product.service';
 import { ShowSmallErrorComponent } from './show-small-error/show-small-error.component';
 import { AuthService } from './services/auth.service';
 import { CustomerService } from './services/customer.service';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CustomerService } from './services/customer.service';
     ShowSmallErrorComponent
   ],
   imports: [
+    AlertModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,

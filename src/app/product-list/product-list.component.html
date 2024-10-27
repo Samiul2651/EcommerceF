@@ -1,4 +1,7 @@
-<button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button>
+<!DOCTYPE html>
+<html>
+<body>
+<!-- <button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button>
 <input type="text" (keyup)="ViewProductList()" placeholder="Search Product" [(ngModel)]="input">
 
 <div>
@@ -9,21 +12,24 @@
             </p>
         </div>
     }
-</div>
+</div> -->
+<!-- <img src="../../images/asus_tuf.jpg" alt="asus"> -->
 
-<div>
-    <!-- *ngFor="let product of products"> -->
+    
     @for (product of products; track $index;){ 
-        <div class="card">
-            
-            <h1>{{product.name}}</h1>
-            <p class="price">${{product.price}}</p>
+        <div class="product-card">         
+            <img src={{product.imageLink}} alt="N/A">
+            <button (click)="addProductToCart(product.id)">Add to Cart</button>
+            <h4>{{product.name}}</h4>
             <div>
-                <p>
-                    <button (click)="addProductToCart(product.id)">Add to Cart</button>
-                </p>
+                <span>{{product.price}}</span>
+                <button>+</button>
             </div>
-        </div>
+            <br>
+        </div>    
     }
-</div>
+    
+</body>
+</html>
+
 <!-- </div> -->
