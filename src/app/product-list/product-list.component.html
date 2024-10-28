@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html>
-<body>
-<!-- <button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button>
-<input type="text" (keyup)="ViewProductList()" placeholder="Search Product" [(ngModel)]="input">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div>
+    </head>
+<body>
+<button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button>
+<div class="wrap">
+<div class="search">
+    <input class="searchTerm" type="text" (keyup)="ViewProductList(1)" placeholder="Search Product" [(ngModel)]="input">
+    <button class="searchButton"><i class="fa fa-search"></i></button>
+</div>
+</div>
+<!-- <button (click)="goBack()">Go Back</button> -->
+<div class="category-cont">
     @for(category of categories;track $index;){
         <div>
             <p>
-                <button (click)="showProductsByCategory(category.id)">{{category.name}}</button>
+                <button (click)="showProductsByCategory(category.id)" class="category__btn">{{category.name}}</button>
             </p>
         </div>
     }
-</div> -->
-<!-- <img src="../../images/asus_tuf.jpg" alt="asus"> -->
+</div>
 
-    
+<div class="cont">
     @for (product of products; track $index;){ 
-        <div class="product-card">         
+        <div class="product-card">
+            <div class="product-card__image">     
             <img src={{product.imageLink}} alt="N/A">
-            <button (click)="addProductToCart(product.id)">Add to Cart</button>
-            <h4>{{product.name}}</h4>
-            <div>
-                <span>{{product.price}}</span>
-                <button>+</button>
             </div>
-            <br>
+            <div class="product-card__info">
+                <h2>{{product.name}}</h2>
+                <div class="product-card__price-row">
+                    <span class="product-card__price">${{product.price}}</span>
+                    <button (click)="addProductToCart(product.id)" class="product-card__btn">Add to Cart</button>
+                </div>
+            </div>
         </div>    
+        <br>
     }
-    
+</div> 
+
+<div class="pageList">
+    <button (click)="toPage(1)">1</button>
+    @for(page of pageList;track $index){
+        <button (click)="toPage(page)">{{page}}</button>
+    }
+</div>
 </body>
 </html>
 

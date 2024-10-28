@@ -64,6 +64,7 @@ export class LoginComponent {
     this.authService.login(user)
       .subscribe(response => {
         // console.log(response);
+        localStorage.setItem("categoryId", "root");
         localStorage.setItem("user", user.email);
         this.router.navigateByUrl('/product-list');
       }, (error : Response) =>{

@@ -35,14 +35,14 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([
-      {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent},
-      {path: 'payment', component: PaymentComponent},
-      {path: 'product-list', component: ProductListComponent},
-      {path: 'admin', component: AdminComponent},
-      {path: 'order', component: OrderComponent}
-    ])
+    // RouterModule.forRoot([
+    //   // {path: 'login', component: LoginComponent},
+    //   // {path: 'register', component: RegisterComponent},
+    //   // {path: 'payment', component: PaymentComponent},
+    //   // {path: 'product-list', component: ProductListComponent},
+    //   // {path: 'admin', component: AdminComponent},
+    //   // {path: 'order', component: OrderComponent}
+    // ])
   ],
   providers: [
     provideHttpClient(),

@@ -1,9 +1,13 @@
+import { Category } from './../../category';
 import { Product } from './../product';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ProductService } from '../services/product.service';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -12,16 +16,54 @@ import { ProductService } from '../services/product.service';
 
 export class ProductListComponent implements OnInit {
   constructor(
-    private productService: ProductService
-  ){}
+    private productService: ProductService,
+    private location: Location,
+    private router: Router,
+    private route: ActivatedRoute
+  ){
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
   products: Product[] = [];
   showOrder: boolean = false;
   categories : any[] = [];
   input:string = '';
-
+  categoryId : string = '';
+  currentPage : number = 1;
+  pageList : number[] = [];
   ngOnInit(): void {
-    console.log(localStorage.getItem("user"));
-    this.productService.getProductsByPage(1)
+    // let url = this.router.url;
+    // console.log(url);
+    // let categoryId = url.slice(14);
+    // console.log("Category " + categoryId);
+    
+    let response = this.route.snapshot.paramMap.get('id');
+    let page : number | null = Number(this.route.snapshot.paramMap.get('page'));
+    if(page)this.currentPage = page;
+    // console.log(page);
+    if(response)this.categoryId = response;
+    
+    if(this.categoryId == ""){
+      this.getProductsByPage(1);
+      this.getRootCatgories();
+    }
+    else{
+      this.getProductsByPageAndCategory(this.currentPage);
+    }
+
+    for(let i = this.currentPage;i < this.currentPage + 10;i++){
+      this.pageList.push(i);
+    }
+    
+  }
+
+  toPage(page : number){
+    this.router.navigate(['/product-list/', {id : this.categoryId, page : page}]);
+  }
+
+  getProductsByPage(page : number){
+    this.productService.getProductsByPage(page)
       .subscribe((response : any) =>{
         this.products = response.products;
         this.products.forEach(product => {
@@ -30,7 +72,17 @@ export class ProductListComponent implements OnInit {
           else product.quantity = 0;
         })
       })
-      
+  }
+
+  getProductsByPageAndCategory(page : number){
+    this.productService.getProductsByCategory(this.categoryId, page)
+      .subscribe((response : any) => {
+        this.products = response;
+        this.showCategoryByParent(this.categoryId);
+      });
+  }
+
+  getRootCatgories(){
     this.productService.getRootCategories()
       .subscribe((response : any) => {
         console.log(response);
@@ -38,9 +90,9 @@ export class ProductListComponent implements OnInit {
       });
   }
 
-  ViewProductList(){
+  ViewProductList(page : number){
     if(this.input == '' || this.input == null ){
-      this.productService.getProductsByPage(1)
+      this.productService.getProductsByPage(page)
       .subscribe((response : any) =>{
         this.products = response.products;
       })
@@ -74,17 +126,14 @@ export class ProductListComponent implements OnInit {
     }
     sessionStorage.setItem(productID, currentQuantity.toString());
     if(product) product.quantity = currentQuantity;
-    // console.log(product?.order + " " + product?.price);
     alert(product?.name + " Added to Cart");
   }
 
   showProductsByCategory(categoryId : string){
-    console.log(categoryId);
-    this.productService.getProductsByCategory(categoryId, 1)
-      .subscribe((response : any) => {
-        this.products = response;
-        this.showCategoryByParent(categoryId);
-      });
+    // console.log("Ashce");
+    // console.log(categoryId);
+    // this.router.navigateByUrl('/product-list/'+categoryId);
+    this.router.navigate(['/product-list/', {id : categoryId}]);
   }
 
   showCategoryByParent(categoryId : string){
@@ -94,6 +143,7 @@ export class ProductListComponent implements OnInit {
         this.categories = response;
       });
   }
+
 }
 
 
