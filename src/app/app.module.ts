@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { LoginComponent } from './login/login-form.component';
 import { RegisterComponent } from './register/register.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -17,6 +17,7 @@ import { ShowSmallErrorComponent } from './show-small-error/show-small-error.com
 import { AuthService } from './services/auth.service';
 import { CustomerService } from './services/customer.service';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { authInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     // ])
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient( withInterceptors([
+      authInterceptor
+    ])),
     ProductService,
     AuthService,
     CustomerService

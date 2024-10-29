@@ -1,17 +1,21 @@
 import { Product } from './../product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private auth : AuthService
+  ){}
 
   private url = "https://localhost:7276/api/Product/";
   
+
   getProductsByPage(page : number){
+    // const headers = this.auth.getHeaders();
     return this.http.get(this.url + 'getProducts/1');
   }
 

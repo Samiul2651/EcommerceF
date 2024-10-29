@@ -62,11 +62,16 @@ export class LoginComponent {
     }
     console.log(user);
     this.authService.login(user)
-      .subscribe(response => {
+      .subscribe((response : any) => {
         // console.log(response);
-        localStorage.setItem("categoryId", "root");
-        localStorage.setItem("user", user.email);
-        this.router.navigateByUrl('/product-list');
+        // localStorage.setItem("categoryId", "root");
+        // localStorage.setItem("user", user.email);
+        if(response.customer.token){
+          console.log(response.customer.token);
+          localStorage.setItem("token", response.customer.token);
+          this.router.navigateByUrl('/product-list');
+        }
+        
       }, (error : Response) =>{
         alert(error.status);
         console.log(error);

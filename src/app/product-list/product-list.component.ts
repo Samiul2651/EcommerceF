@@ -33,16 +33,12 @@ export class ProductListComponent implements OnInit {
   currentPage : number = 1;
   pageList : number[] = [];
   ngOnInit(): void {
-    // let url = this.router.url;
-    // console.log(url);
-    // let categoryId = url.slice(14);
-    // console.log("Category " + categoryId);
-    
-    let response = this.route.snapshot.paramMap.get('id');
+    // console.log(localStorage.getItem("token"));
+
+    let categoryId = this.route.snapshot.paramMap.get('id');
     let page : number | null = Number(this.route.snapshot.paramMap.get('page'));
     if(page)this.currentPage = page;
-    // console.log(page);
-    if(response)this.categoryId = response;
+    if(categoryId)this.categoryId = categoryId;
     
     if(this.categoryId == ""){
       this.getProductsByPage(1);
@@ -65,6 +61,7 @@ export class ProductListComponent implements OnInit {
   getProductsByPage(page : number){
     this.productService.getProductsByPage(page)
       .subscribe((response : any) =>{
+        // console.log(response);
         this.products = response.products;
         this.products.forEach(product => {
           let quantity = sessionStorage.getItem(product.id);
@@ -130,9 +127,6 @@ export class ProductListComponent implements OnInit {
   }
 
   showProductsByCategory(categoryId : string){
-    // console.log("Ashce");
-    // console.log(categoryId);
-    // this.router.navigateByUrl('/product-list/'+categoryId);
     this.router.navigate(['/product-list/', {id : categoryId}]);
   }
 
