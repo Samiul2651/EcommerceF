@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Category } from '../../category';
 
 @Component({
@@ -14,30 +13,35 @@ import { Category } from '../../category';
 export class AdminComponent implements OnInit {
 
   constructor(
-    private http: HttpClient, 
-    route: ActivatedRoute,
+    private formBuilder : FormBuilder,
+    private route: ActivatedRoute,
+    private router : Router,
     private productService : ProductService 
-  ){}
-  url = "https://localhost:7276/api/Product/";
+  ){
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
   products: Product[] = [];
   input: string = '';
   
-  form = new FormGroup({
-    productName: new FormControl('',[
+  form = this.formBuilder.group({
+    productName: ['',[
       Validators.required,
-    ]),
-    price: new FormControl('', [
+    ]],
+    price: ['', [
       Validators.required,
-    ]),
-    type: new FormControl('', [
+    ]],
+    type: ['', [
       Validators.required,
-    ]),
-    imageLink: new FormControl('', [
+    ]],
+    imageLink: ['', [
       Validators.required,
-    ])
+    ]]
   });
 
   items: Category[] = [];
+  editProductId : string = '';
 
   get productName(){
     return this.form.get("productName");
@@ -59,28 +63,30 @@ export class AdminComponent implements OnInit {
   _showAllProduct : boolean = true;
   
   ngOnInit(): void {
-    this.http.get(this.url + 'getProducts/1')
-      .subscribe((response : any) => {
-        // console.log(JSON.stringify(response));
-        this.products = response.products;
-        console.log(this.products);
-      });
+    let productId = this.route.snapshot.paramMap.get('id');
+    if(productId == null){
+      this.productService.getProductsByPage(1)
+        .subscribe((response : any) => {
+          this.products = response.products;
+        });
+    }
+    else{
+      this.editProductId = productId;
+      this._showAllProduct = false;
+    }
   }
   viewProductListByName(){
     console.log(this.input);
     if(this.input == '' || this.input == null ){
-      this.http.get(this.url + 'getProducts/1')
-      .subscribe((response : any) => {
-        // console.log(JSON.stringify(response));
-        this.products = response.products;
-        // console.log(this.products);
-      });
+      this.productService.getProductsByPage(1)
+        .subscribe((response : any) => {
+          this.products = response.products;
+        });
       return;
     }
     this.products = [];
-    this.http.get(this.url + 'getProductsBySearch/' + this.input + '/1')
+    this.productService.getProductsBySearch(1, this.input)  
       .subscribe((response : any) => {
-        // console.log(JSON.stringify(response));
         this.products = response.products;
         console.log(this.products);
       });
@@ -89,18 +95,15 @@ export class AdminComponent implements OnInit {
   viewProductListByID(){
     console.log(this.input);
     if(this.input == '' || this.input == null ){
-      this.http.get(this.url + 'getProducts/1')
-      .subscribe((response : any) => {
-        // console.log(JSON.stringify(response));
-        this.products = response.products;
-        // console.log(this.products);
-      });
+      this.productService.getProductsByPage(1)
+        .subscribe((response : any) => {
+          this.products = response.products;
+        });
       return;
     }
     this.products = [];
-    this.http.get(this.url + 'getProductsBySearchWithId/' + this.input + '/1')
+    this.productService.getProductsBySearchAndId(this.input)
       .subscribe((response : any) => {
-        // console.log(JSON.stringify(response));
         this.products = response.products;
         console.log(this.products);
       });
@@ -108,15 +111,11 @@ export class AdminComponent implements OnInit {
 
   deleteProduct(productId : string){
     this.productService.deleteProduct(productId)
-      .subscribe( response => {
+      .subscribe( () => {
         this.viewProductListByName();
       });
       
   }
-
-  // AddCategory(productId: string){
-    
-  // }
 
   showAddProduct(){
     this._showAddProduct = !this._showAddProduct;
@@ -166,7 +165,6 @@ export class AdminComponent implements OnInit {
   };
   editProduct(){
     this.showAllProduct();
-    // console.log(this.productToEdit);
     this.productToEdit.category = '';
     let productName : string = this.productToEdit.name;
     let productPrice : number = this.productToEdit.price;
@@ -180,6 +178,8 @@ export class AdminComponent implements OnInit {
     this.productToEdit.price = productPrice;
     this.productToEdit.type = productType;
     this.productToEdit.imageLink = productImageLink;
+    this.productToEdit.id = this.editProductId;
+    console.log(this.productToEdit);
     this.productService.editProduct(this.productToEdit)
       .subscribe(response => {
         console.log(response);
@@ -189,8 +189,7 @@ export class AdminComponent implements OnInit {
   }
   
   showEditProduct(product : Product){
-    this._showAllProduct = !this._showAllProduct;
-    this.productToEdit = product
+    this.router.navigate(['/admin', {id : product.id}]);
   }
 
 }

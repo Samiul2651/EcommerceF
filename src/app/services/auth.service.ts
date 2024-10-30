@@ -38,19 +38,15 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  isTokenExpired(){
-    const token = this.getToken();
-    if(!token)return true;
-
-    const decoded = jwtDecode(token);
-    if(!decoded.exp) return true;
-
-    const expirationDate = decoded.exp * 1000;
-    const now = new Date().getTime();
-
-    return expirationDate < now;
-
-  }
+  // isTokenExpired(){
+  //   const token = this.getToken();
+  //   if(!token)return true;
+  //   const decoded = jwtDecode(token);
+  //   if(!decoded.exp) return true;
+  //   const expirationDate = decoded.exp * 1000;
+  //   const now = new Date().getTime();
+  //   return expirationDate < now;
+  // }
 
   
 }

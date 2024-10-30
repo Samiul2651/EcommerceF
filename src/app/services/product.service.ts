@@ -15,7 +15,6 @@ export class ProductService {
   
 
   getProductsByPage(page : number){
-    // const headers = this.auth.getHeaders();
     return this.http.get(this.url + 'getProducts/1');
   }
 
@@ -53,5 +52,9 @@ export class ProductService {
 
   getCategoryByParent(categoryId : string){
     return this.http.get(this.url+"getCategoryByParent/" + categoryId);
+  }
+
+  getProductsBySearchAndId(input : string){
+    return  this.http.get(this.url + 'getProductsBySearchWithId/' + input + '/1');
   }
 }

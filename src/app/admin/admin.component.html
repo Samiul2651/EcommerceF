@@ -2,7 +2,7 @@
 <input type="text" (keyup)="viewProductListByID()" placeholder="Search Product By ID" [(ngModel)]="input">
 
 <button (click)="showAddProduct()"> Add Product</button>
-@if(_showAddProduct){
+@if(_showAddProduct && _showAllProduct){
     <form [formGroup]="form" (ngSubmit)="addProduct()">
         <div class="form-group">
             <label for="productName">productName</label>

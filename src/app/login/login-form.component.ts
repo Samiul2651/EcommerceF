@@ -1,9 +1,7 @@
 import { AuthService } from './../services/auth.service';
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CustomerService } from '../services/customer.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component} from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-form',
@@ -13,21 +11,30 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class LoginComponent {
   
   constructor(
-    private customerService : CustomerService,
+    private formBuilder: FormBuilder,
     private authService : AuthService,
-    private route : ActivatedRoute,
-    private router : Router
-  ){}
-  url = "https://localhost:7276/api/";
-  form = new FormGroup({
-    email: new FormControl('',[
+    private router : Router,
+    
+  ){ }
+  // form = new FormGroup({
+  //   email: new FormControl('',[
+  //     Validators.required,
+  //     Validators.email
+  //   ]),
+  //   password: new FormControl('', [
+  //     Validators.required,
+  //     Validators.minLength(6),
+  //   ])
+  // });
+  form = this.formBuilder.group({
+    email : ['',[
       Validators.required,
       Validators.email
-    ]),
-    password: new FormControl('', [
+    ] ],
+    password: ['', [
       Validators.required,
       Validators.minLength(6),
-    ])
+    ]]
   });
 
   
@@ -39,16 +46,9 @@ export class LoginComponent {
   get password(){
     return this.form.get('password');
   }
-  @Output() registerEvent = new EventEmitter;
-  sendChange(){
-    // console.log("AAAAAAAA");
-    this.registerEvent.emit();
-  }
 
   login(){
-    // let getUrl = this.url+'Customer/login/'+this.email?.value+'/'+this.password?.value;
-    // console.log(getUrl);
-
+    
     let userEmail = this.email?.value;
     if(userEmail == null)userEmail = "";
     let userPassword = this.password?.value;
@@ -63,11 +63,8 @@ export class LoginComponent {
     console.log(user);
     this.authService.login(user)
       .subscribe((response : any) => {
-        // console.log(response);
-        // localStorage.setItem("categoryId", "root");
-        // localStorage.setItem("user", user.email);
         if(response.customer.token){
-          console.log(response.customer.token);
+          //console.log(response.customer.token);
           localStorage.setItem("token", response.customer.token);
           this.router.navigateByUrl('/product-list');
         }

@@ -1,13 +1,7 @@
-import { Category } from './../../category';
 import { Product } from './../product';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
-import { Location } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -17,7 +11,6 @@ import { Observable } from 'rxjs';
 export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
-    private location: Location,
     private router: Router,
     private route: ActivatedRoute
   ){
@@ -61,7 +54,7 @@ export class ProductListComponent implements OnInit {
   getProductsByPage(page : number){
     this.productService.getProductsByPage(page)
       .subscribe((response : any) =>{
-        // console.log(response);
+        // console.log(response.products);
         this.products = response.products;
         this.products.forEach(product => {
           let quantity = sessionStorage.getItem(product.id);
@@ -74,7 +67,7 @@ export class ProductListComponent implements OnInit {
   getProductsByPageAndCategory(page : number){
     this.productService.getProductsByCategory(this.categoryId, page)
       .subscribe((response : any) => {
-        this.products = response;
+        this.products = response.products;
         this.showCategoryByParent(this.categoryId);
       });
   }
@@ -82,8 +75,8 @@ export class ProductListComponent implements OnInit {
   getRootCatgories(){
     this.productService.getRootCategories()
       .subscribe((response : any) => {
-        console.log(response);
-        this.categories = response;
+        // console.log(response);
+        this.categories = response.categories;
       });
   }
 
@@ -134,7 +127,7 @@ export class ProductListComponent implements OnInit {
     this.categories = [];
     this.productService.getCategoryByParent(categoryId)
       .subscribe((response : any) =>{
-        this.categories = response;
+        this.categories = response.categories;
       });
   }
 

@@ -1,8 +1,5 @@
 import { Product } from './../product';
 import { Component, OnInit } from '@angular/core';
-// import { Order } from '../order';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -31,7 +28,6 @@ export class OrderComponent implements OnInit {
   }
 
   RemoveProductFromCart(product : Product){
-    // console.log(product);
     sessionStorage.removeItem(product.id);
     this.orders = this.orders.filter(obj => obj != product);
   }
@@ -49,12 +45,12 @@ export class OrderComponent implements OnInit {
     product.quantity -= 1;
     if(product.quantity < 0)product.quantity = 0;
     sessionStorage.setItem(product.id, product.quantity.toString());
-    console.log(product);
+    // console.log(product);
   }
   
   IncreaseQuantity(product: Product){
     product.quantity += 1;
     sessionStorage.setItem(product.id, product.quantity.toString());
-    console.log(product);
+    // console.log(product);
   }
 }

@@ -1,7 +1,5 @@
-import { CustomerService } from './../services/customer.service';
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
 import { User } from '../../user';
 import { AuthService } from '../services/auth.service';
 
@@ -12,28 +10,26 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent {
   constructor(
-    // private http: HttpClient,
-    private customerService : CustomerService,
+    private formBuilder : FormBuilder,
     private authService : AuthService
   ){}
 
-  @Output() loginEvent = new EventEmitter();
-  form = new FormGroup({
-    name: new FormControl('',[
+  form = this.formBuilder.group({
+    name: ['',[
       Validators.required,
-    ]),
-    email: new FormControl('',[
-      Validators.required,
-      Validators.email
-    ]),
-    confirmEmail: new FormControl('',[
+    ]],
+    email: ['',[
       Validators.required,
       Validators.email
-    ]),
-    password: new FormControl('', [
+    ]],
+    confirmEmail: ['',[
+      Validators.required,
+      Validators.email
+    ]],
+    password: ['', [
       Validators.required,
       Validators.minLength(6),
-    ])
+    ]]
   });
 
   get name(){
@@ -52,15 +48,10 @@ export class RegisterComponent {
     return this.form.get('password');
   }
 
-  sendChange(){
-    this.loginEvent.emit();
-  }
-
   register(){
     if(this.email?.value != this.confirmEmail?.value){
       alert("Email Not Matched");
     }
-    // let url = "https://localhost:7276/api/Customer";
     let user : User = {
       id : "",
       name : this.name?.value,
@@ -71,9 +62,7 @@ export class RegisterComponent {
       .subscribe(response =>{
         alert("Registration Successfull");
       }, error =>{
-        // console.log(error);
         alert("Registration Error");
       });
-    // console.log("ab");
   }
 }

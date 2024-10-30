@@ -10,13 +10,6 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
   url = "https://localhost:7276/api/Customer";
-  // register(user : User){
-  //   return this.http.post(this.url, user);
-  // }
-
-  // login(user : any){
-  //   return this.http.get(`${this.http}/login`, user);
-  // }
 
   takeOrder(order : any){
     return this.http.post(this.url + "/order", order);

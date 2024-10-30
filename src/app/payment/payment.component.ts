@@ -1,10 +1,7 @@
-import { Category } from './../../category';
 import { CustomerService } from './../services/customer.service';
-import { Product } from './../product';
 import { Order } from './../order';
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -15,24 +12,24 @@ import { ProductService } from '../services/product.service';
 export class PaymentComponent {
 
   constructor(
+    private formBuilder : FormBuilder,
     private productService : ProductService,
     private customerService : CustomerService
   ){}
 
-  form = new FormGroup({
-    name : new FormControl('', [
+  form = this.formBuilder.group({
+    name : ['', [
       Validators.required
-    ]),
-    email : new FormControl('',[
+    ]],
+    email : ['',[
       Validators.required, Validators.email
-    ]),
-    mobile : new FormControl('', [
+    ]],
+    mobile : ['', [
       Validators.required
-    ]),
-    address : new FormControl('', [
+    ]],
+    address : ['', [
       Validators.required
-    ])
-
+    ]]
   });
 
   get email(){
@@ -60,7 +57,6 @@ export class PaymentComponent {
           alert("Pease fill all fields");
           return;
     }
-    let totalPrice = 0;
     let orderAddress = '';
     if(this.address.value)orderAddress = this.address.value;
     let currentDate = new Date();
@@ -77,6 +73,8 @@ export class PaymentComponent {
       orderTime : currentDate
     };
     let len = sessionStorage.length;
+    
+    // This needs to be fixed
     Object.keys(sessionStorage).forEach((key) =>{
       this.productService.getProduct(key)
       .subscribe((response : any)=>{
@@ -90,7 +88,12 @@ export class PaymentComponent {
         if(order.products.length == len){
           // console.log(order);
           this.customerService.takeOrder(order)
-            .subscribe();
+            .subscribe(response => {
+              alert("Payment Successful");
+            },error =>{
+              alert("Payment Error");
+            }
+          );
         }
       })
       

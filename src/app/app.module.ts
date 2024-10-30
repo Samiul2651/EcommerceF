@@ -18,6 +18,7 @@ import { AuthService } from './services/auth.service';
 import { CustomerService } from './services/customer.service';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { authInterceptor } from './auth.interceptor';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -28,14 +29,15 @@ import { authInterceptor } from './auth.interceptor';
     PaymentComponent,
     OrderComponent,
     AdminComponent,
-    ShowSmallErrorComponent
+    ShowSmallErrorComponent,
+    ErrorPageComponent
   ],
   imports: [
     AlertModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
     // RouterModule.forRoot([
     //   // {path: 'login', component: LoginComponent},
     //   // {path: 'register', component: RegisterComponent},
