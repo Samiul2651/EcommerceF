@@ -38,6 +38,10 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
+  getAccessToken(tokenDto : any){
+    return this.http.post('token', tokenDto);
+  }
+
   // isTokenExpired(){
   //   const token = this.getToken();
   //   if(!token)return true;

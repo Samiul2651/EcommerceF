@@ -66,7 +66,13 @@ export class LoginComponent {
         if(response.customer.token){
           //console.log(response.customer.token);
           localStorage.setItem("token", response.customer.token);
-          this.router.navigateByUrl('/product-list');
+          localStorage.setItem("refreshToken", response.customer.refreshToken);
+          localStorage.setItem("email", response.customer.email);
+          console.log(response);
+          setTimeout(() => {
+            this.router.navigateByUrl('/product-list');
+          }, 2000);
+          // this.router.navigateByUrl('/product-list');
         }
         
       }, (error : Response) =>{
