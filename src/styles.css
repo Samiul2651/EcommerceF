@@ -2,3 +2,10 @@
 body{
     background-color: aquamarine;
 } */
+body{
+    background-color: aliceblue;
+}
+html, body {
+    margin:0;
+    padding:0;
+}

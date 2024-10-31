@@ -19,6 +19,7 @@ import { CustomerService } from './services/customer.service';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { authInterceptor } from './auth.interceptor';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     OrderComponent,
     AdminComponent,
     ShowSmallErrorComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    NavbarComponent
   ],
   imports: [
     AlertModule.forRoot(),
