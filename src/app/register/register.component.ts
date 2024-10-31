@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { User } from '../../user';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,8 @@ import { AuthService } from '../services/auth.service';
 export class RegisterComponent {
   constructor(
     private formBuilder : FormBuilder,
-    private authService : AuthService
+    private authService : AuthService,
+    private router : Router
   ){}
 
   form = this.formBuilder.group({
@@ -64,5 +66,9 @@ export class RegisterComponent {
       }, error =>{
         alert("Registration Error");
       });
+  }
+
+  login(){
+    this.router.navigateByUrl('/login');
   }
 }

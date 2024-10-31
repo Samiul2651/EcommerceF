@@ -57,4 +57,8 @@ export class ProductService {
   getProductsBySearchAndId(input : string){
     return  this.http.get(this.url + 'getProductsBySearchWithId/' + input + '/1');
   }
+
+  getProductsByIds(ids : string[]){
+    return this.http.post(this.url + 'getProductsByIds', ids);
+  } 
 }

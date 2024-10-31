@@ -75,30 +75,52 @@ export class PaymentComponent {
     let len = sessionStorage.length;
     
     // This needs to be fixed
-    Object.keys(sessionStorage).forEach((key) =>{
-      this.productService.getProduct(key)
-      .subscribe((response : any)=>{
-        response.product.category = '';
-        order.products.push(response.product);
+    // Object.keys(sessionStorage).forEach((key) =>{
+    //   this.productService.getProduct(key)
+    //   .subscribe((response : any)=>{
+    //     response.product.category = '';
+    //     order.products.push(response.product);
         
-        if(sessionStorage.getItem(response.product.id)){
-          response.product.quantity = Number(sessionStorage.getItem(response.product.id));
-        }
-        order.price += response.product.price * response.product.quantity;
-        if(order.products.length == len){
-          // console.log(order);
-          this.customerService.takeOrder(order)
-            .subscribe(response => {
-              alert("Payment Successful");
-            },error =>{
-              alert("Payment Error");
-            }
-          );
-        }
-      })
+    //     if(sessionStorage.getItem(response.product.id)){
+    //       response.product.quantity = Number(sessionStorage.getItem(response.product.id));
+    //     }
+    //     order.price += response.product.price * response.product.quantity;
+    //     if(order.products.length == len){
+    //       // console.log(order);
+    //       this.customerService.takeOrder(order)
+    //         .subscribe(response => {
+    //           alert("Payment Successful");
+    //         },error =>{
+    //           alert("Payment Error");
+    //         }
+    //       );
+    //     }
+    //   })
       
-    });
-    
+    // });
+
+    let keys : string[] = Object.keys(sessionStorage);
+    console.log(keys);
+    this.productService.getProductsByIds(keys)
+      .subscribe((response : any) => {
+        order.products = response.products;
+        order.products.forEach(product => {
+          if(sessionStorage.getItem(product.id)){
+              product.quantity = Number(sessionStorage.getItem(product.id));
+          }
+          order.price += product.price * product.quantity;
+        });
+        console.log(order);
+        this.customerService.takeOrder(order)
+          .subscribe(response => {
+            console.log(order);
+            alert("Payment Successful");
+          }, error => {
+            alert("Payment Error");
+          }
+        )
+
+      })
   }
   
   
