@@ -68,7 +68,7 @@ export class LoginComponent {
           localStorage.setItem("token", response.customer.token);
           localStorage.setItem("refreshToken", response.customer.refreshToken);
           localStorage.setItem("email", response.customer.email);
-          console.log(response);
+          // console.log(response);
           setTimeout(() => {
             this.router.navigateByUrl('/product-list');
           }, 2000);

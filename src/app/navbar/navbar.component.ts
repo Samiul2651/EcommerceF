@@ -19,6 +19,7 @@ export class NavbarComponent {
     this.router.navigateByUrl('/login');
   }
   logout(){
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
   order(){

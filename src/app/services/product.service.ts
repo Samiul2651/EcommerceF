@@ -15,7 +15,7 @@ export class ProductService {
   
 
   getProductsByPage(page : number){
-    return this.http.get(this.url + 'getProducts/1');
+    return this.http.get(this.url + 'getProducts/' + page);
   }
 
   getProductsBySearch(page : number, input : string){

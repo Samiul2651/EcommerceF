@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   getAccessToken(tokenDto : any){
-    return this.http.post('token', tokenDto);
+    return this.http.post(this.url + '/token', tokenDto);
   }
 
   // isTokenExpired(){

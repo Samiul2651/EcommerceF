@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit {
     if(categoryId)this.categoryId = categoryId;
     
     if(this.categoryId == ""){
-      this.getProductsByPage(1);
+      this.getProductsByPage(this.currentPage);
       this.getRootCatgories();
     }
     else{
@@ -48,13 +48,16 @@ export class ProductListComponent implements OnInit {
   }
 
   toPage(page : number){
+    console.log("Page " + page);
     this.router.navigate(['/product-list/', {id : this.categoryId, page : page}]);
   }
 
   getProductsByPage(page : number){
+    this.products = [];
+    console.log("Page: " + page);
     this.productService.getProductsByPage(page)
       .subscribe((response : any) =>{
-        // console.log(response.products);
+        console.log(response);
         this.products = response.products;
         this.products.forEach(product => {
           let quantity = sessionStorage.getItem(product.id);

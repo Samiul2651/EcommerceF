@@ -1,9 +1,9 @@
+import { Category } from './../../category';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Category } from '../../category';
 
 @Component({
   selector: 'app-admin',
@@ -37,6 +37,9 @@ export class AdminComponent implements OnInit {
     ]],
     imageLink: ['', [
       Validators.required,
+    ]],
+    categoryId: ['', [
+      // Validators.required
     ]]
   });
 
@@ -58,11 +61,20 @@ export class AdminComponent implements OnInit {
   get imageLink(){
     return this.form.get("imageLink");
   }
+
+  get categoryId(){
+    return this.form.get("categoryId");
+  }
   
   _showAddProduct : boolean = false;
   _showAllProduct : boolean = true;
   
   ngOnInit(): void {
+    this.productService.getCategories()
+      .subscribe((response : any) => {
+        this.items = response.categories;
+      })
+
     let productId = this.route.snapshot.paramMap.get('id');
     if(productId == null){
       this.productService.getProductsByPage(1)
@@ -74,6 +86,10 @@ export class AdminComponent implements OnInit {
       this.editProductId = productId;
       this._showAllProduct = false;
     }
+
+    
+    
+
   }
   viewProductListByName(){
     console.log(this.input);
@@ -126,14 +142,17 @@ export class AdminComponent implements OnInit {
   }
 
   addProduct(){
+    // console.log("category: " + this.categoryId?.value);
     let productName : string = '';
     let productPrice : number = 0;
     let productType : string = '';
     let productImageLink : string = '';
+    let categoryId : string = '';
     if(this.productName?.value) productName = this.productName.value;
     if(this.price?.value)productPrice = Number(this.price.value);
     if(this.type?.value)productType = this.type.value;
     if(this.imageLink?.value)productImageLink = this.imageLink.value;
+    if(this.categoryId?.value)categoryId = this.categoryId.value;
     let product : Product = {
       id : '',
       name : productName,
@@ -141,7 +160,7 @@ export class AdminComponent implements OnInit {
       type : productType,
       imageLink : productImageLink,
       trendingScore : 0,
-      category : '',
+      category : categoryId,
       quantity : 0
     }
 

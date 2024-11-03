@@ -43,11 +43,18 @@
                 class="form-control">
             <div *ngIf="imageLink?.touched && imageLink?.invalid" class="alert alert-danger"> imageLink is Invalid</div>
         </div>
-        <select>
+        <div class="form-group">
+            <select
+             
+            formControlName="categoryId"
+            id="categoryId"
+            name="item"
+            >
             @for(item of items; track $index){
-                <option>item.id</option>
+                <option [value]="item.id">{{item.name}}</option>
             }
-        </select>
+            </select>
+        </div>
         <button class="btn btn-primary" type="submit">Submit</button>
 
     </form>
@@ -111,7 +118,7 @@
         </div>
         <select>
             @for(item of items; track $index){
-                <option>item.id</option>
+                <option>{{item.name}}</option>
             }
         </select>
         <button class="btn btn-primary" type="submit">Submit</button>
