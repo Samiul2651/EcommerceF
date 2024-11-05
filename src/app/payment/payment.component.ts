@@ -3,6 +3,7 @@ import { Order } from './../order';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -14,7 +15,8 @@ export class PaymentComponent {
   constructor(
     private formBuilder : FormBuilder,
     private productService : ProductService,
-    private customerService : CustomerService
+    private customerService : CustomerService,
+    private router : Router
   ){}
 
   form = this.formBuilder.group({
@@ -115,8 +117,10 @@ export class PaymentComponent {
           .subscribe(response => {
             console.log(order);
             alert("Payment Successful");
+            this.router.navigateByUrl('product-list');
           }, error => {
             alert("Payment Error");
+            this.router.navigateByUrl('order');
           }
         )
 

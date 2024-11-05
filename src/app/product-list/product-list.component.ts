@@ -2,6 +2,8 @@ import { Product } from './../product';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
+import { Category } from '../../category';
+import { CategoryService } from '../services/category.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -12,7 +14,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoryService: CategoryService
   ){
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -24,6 +27,7 @@ export class ProductListComponent implements OnInit {
   input:string = '';
   categoryId : string = '';
   currentPage : number = 1;
+  maxPage : number = 100000;
   pageList : number[] = [];
   ngOnInit(): void {
     // console.log(localStorage.getItem("token"));
@@ -41,7 +45,7 @@ export class ProductListComponent implements OnInit {
       this.getProductsByPageAndCategory(this.currentPage);
     }
 
-    for(let i = this.currentPage;i < this.currentPage + 10;i++){
+    for(let i = this.currentPage;i < this.currentPage + 10 && i < this.maxPage;i++){
       this.pageList.push(i);
     }
     
@@ -76,7 +80,7 @@ export class ProductListComponent implements OnInit {
   }
 
   getRootCatgories(){
-    this.productService.getRootCategories()
+    this.categoryService.getRootCategories()
       .subscribe((response : any) => {
         // console.log(response);
         this.categories = response.categories;
@@ -128,7 +132,7 @@ export class ProductListComponent implements OnInit {
 
   showCategoryByParent(categoryId : string){
     this.categories = [];
-    this.productService.getCategoryByParent(categoryId)
+    this.categoryService.getCategoryByParent(categoryId)
       .subscribe((response : any) =>{
         this.categories = response.categories;
       });

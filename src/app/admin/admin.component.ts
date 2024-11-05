@@ -189,15 +189,18 @@ export class AdminComponent implements OnInit {
     let productPrice : number = this.productToEdit.price;
     let productType : string = this.productToEdit.type;
     let productImageLink : string = this.productToEdit.imageLink;
+    let categoryId : string = '';
     if(this.productName?.value) productName = this.productName.value;
     if(this.price?.value)productPrice = Number(this.price.value);
     if(this.type?.value)productType = this.type.value;
     if(this.imageLink?.value)productImageLink = this.imageLink.value;
+    if(this.categoryId?.value)categoryId = this.categoryId.value;
     this.productToEdit.name = productName;
     this.productToEdit.price = productPrice;
     this.productToEdit.type = productType;
     this.productToEdit.imageLink = productImageLink;
     this.productToEdit.id = this.editProductId;
+    this.productToEdit.category = categoryId;
     console.log(this.productToEdit);
     this.productService.editProduct(this.productToEdit)
       .subscribe(response => {
@@ -210,5 +213,7 @@ export class AdminComponent implements OnInit {
   showEditProduct(product : Product){
     this.router.navigate(['/admin', {id : product.id}]);
   }
+
+  // backToadmin
 
 }

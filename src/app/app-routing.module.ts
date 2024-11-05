@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'payment', component: PaymentComponent, canActivate: [authGuard]},
   {path: 'product-list', component: ProductListComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'order', component: OrderComponent, canActivate: [authGuard]},
+  {path: 'order', component: OrderComponent},
   {path: 'error', component: ErrorPageComponent},
   {path: '**', component: ErrorPageComponent}
   // {path: 'product-list/:categoryId', component: ProductListComponent},

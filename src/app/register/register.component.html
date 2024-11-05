@@ -65,7 +65,7 @@
             <div *ngIf="password?.touched && password?.invalid" class="alert alert-danger"> Password is Invalid</div>
         </div>
     </div>
-    <button class="btn" type="submit">Register</button>
+    <button class="btn" type="submit" [disabled]="form.invalid">Register</button>
 </form>
 <br>
 <!-- <button class="btn" id="login" (click)="login()"><a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></button> -->
