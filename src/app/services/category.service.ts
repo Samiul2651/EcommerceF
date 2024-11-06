@@ -21,4 +21,8 @@ export class CategoryService {
   getCategoryByParent(categoryId : string){
     return this.http.get(this.url+"getCategoryByParent/" + categoryId);
   }
+
+  getCategoryBySearch(input : string){
+    return this.http.get(this.url+"searchCategory/"+input);
+  }
 }

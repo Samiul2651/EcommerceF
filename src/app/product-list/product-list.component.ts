@@ -68,8 +68,8 @@ export class ProductListComponent implements OnInit {
           if(quantity)product.quantity = Number(quantity);
           else product.quantity = 0;
         })
-        for(let i = this.currentPage;i < this.currentPage + 10 && i < response.maxPage;i++){
-            this.pageList.push(i);
+        for(let i = this.currentPage;i < this.currentPage + 10 && i <= response.maxPage;i++){
+          if(i != 1)this.pageList.push(i);
         }
         console.log(response.maxPage);
       })
@@ -81,8 +81,8 @@ export class ProductListComponent implements OnInit {
         this.products = response.products;
         console.log(response.maxPage);
         this.showCategoryByParent(this.categoryId);
-        for(let i = this.currentPage;i < (this.currentPage + 10) && i < response.maxPage;i++){
-          this.pageList.push(i);
+        for(let i = this.currentPage;i < (this.currentPage + 10) && i <= response.maxPage;i++){
+          if(i != 1)this.pageList.push(i);
         }
       });
   }

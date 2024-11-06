@@ -1,3 +1,4 @@
+import { CategoryService } from './../services/category.service';
 import { Category } from './../../category';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
@@ -16,7 +17,8 @@ export class AdminComponent implements OnInit {
     private formBuilder : FormBuilder,
     private route: ActivatedRoute,
     private router : Router,
-    private productService : ProductService 
+    private productService : ProductService,
+    private categoryService : CategoryService
   ){
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -70,7 +72,7 @@ export class AdminComponent implements OnInit {
   _showAllProduct : boolean = true;
   
   ngOnInit(): void {
-    this.productService.getCategories()
+    this.categoryService.getCategories()
       .subscribe((response : any) => {
         this.items = response.categories;
       })

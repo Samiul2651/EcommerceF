@@ -8,7 +8,7 @@
 <!-- <button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button> -->
 <div class="wrap">
 <div class="search">
-    <input class="searchTerm" type="text" (keyup)="ViewProductList(1)" placeholder="Search Product" [(ngModel)]="input">
+    <input class="searchTerm" type="text" (keyup)="ViewProductList(1)" placeholder="Search Product" [(nng gModel)]="input">
     <button class="searchButton"><i class="fa fa-search"></i></button>
 </div>
 </div>
@@ -24,9 +24,9 @@
 </div>
 
 <div class="cont">
-    @for (product of products; track $index;){ 
+    @for (product of products; track $index;){
         <div class="product-card">
-            <div class="product-card__image">     
+            <div class="product-card__image">
             <img src={{product.imageLink}} alt="N/A">
             </div>
             <div class="product-card__info">
@@ -36,10 +36,10 @@
                     <button (click)="addProductToCart(product.id)" class="product-card__btn">Add to Cart</button>
                 </div>
             </div>
-        </div>    
+        </div>
         <br>
     }
-</div> 
+</div>
 
 <div class="pageList">
     <button (click)="toPage(1)">1</button>

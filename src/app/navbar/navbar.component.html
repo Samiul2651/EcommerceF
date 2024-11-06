@@ -1,4 +1,45 @@
-<button (click)="home()">Home</button>
-<button (click)="login()">LogIn</button>
-<button (click)="logout()">LogOut</button>
-<button (click)="order()">Order</button>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<nav class="navbar">
+  <div class="navbar-logo">
+    <h1>MyStore</h1>
+  </div>
+  <div class="search">
+    <input class="searchTerm" (keyup)="showSearchDropDown()" type="text" placeholder="Search Product" [(ngModel)]="input">
+    <button class="searchButton"><i class="fa fa-search"></i></button>
+  </div>
+  <div class="navbar-buttons">
+    <button (click)="home()">Home</button>
+    <button (click)="login()">Log In</button>
+    <button (click)="logout()">Log Out</button>
+    <button (click)="order()">Order</button>
+  </div>
+</nav>
+<div class="search-drop-down">
+  <!-- @if(input != ""){ -->
+    <button (click)="showProducts()">Products</button>
+    <button (click)="showCategories()">Category</button>
+  <!-- } -->
+  @if(_showProducts){
+    <div class="cont">
+      @for (product of products; track $index) {
+        <div (click)="showProduct(product)" class="searchOptions">
+          <h3>{{product.name}}</h3>
+          <p>{{product.price}}</p>
+        </div>
+      }
+    </div>
+  }
+  @if(_showCategories){
+    <div class="cont">
+      @for (category of categories; track $index) {
+        <div (click)="showCategory(category)" class="searchOptions">
+          <h3>{{category.name}}</h3>
+        </div>
+      }
+    </div>
+  }
+</div>

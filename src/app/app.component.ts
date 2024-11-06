@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,18 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ecommerce-frontend';
-  _login : boolean = true;
-
-  loginMode() : boolean{
-    return this._login;
-  }
-
-  registerMode(): boolean{
-    return !this._login;
-  }
-
-  changeMode(){
-    this._login = !this._login;
-    console.log("Changed");
+  showNavBar : boolean = true;
+  constructor(router : Router) {
+    router.events.subscribe(event => {
+      if(router.url.includes('register') || router.url.includes('login')){
+        this.showNavBar = false;
+      }
+      else this.showNavBar = true;
+    })
   }
 }

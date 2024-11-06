@@ -20,6 +20,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { authInterceptor } from './auth.interceptor';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     AdminComponent,
     ShowSmallErrorComponent,
     ErrorPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent,
+    CategoryComponent,
+    ProductComponent
   ],
   imports: [
     AlertModule.forRoot(),

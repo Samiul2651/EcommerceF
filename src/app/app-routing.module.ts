@@ -8,6 +8,9 @@ import { AdminComponent } from './admin/admin.component';
 import { OrderComponent } from './order/order.component';
 import { authGuard } from './auth.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import {HomeComponent} from './home/home.component';
+import { ProductComponent } from './product/product.component';
+import { CategoryComponent } from './category/category.component';
 
 
 const routes: Routes = [
@@ -18,7 +21,11 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'order', component: OrderComponent},
   {path: 'error', component: ErrorPageComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'product', component: ProductComponent},
+  {path: 'category', component: CategoryComponent},
   {path: '**', component: ErrorPageComponent}
+
   // {path: 'product-list/:categoryId', component: ProductListComponent},
   // {path: 'product-list/:categoryId/:page', component: ProductListComponent}
 ];
