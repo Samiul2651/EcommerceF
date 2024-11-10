@@ -25,4 +25,8 @@ export class CategoryService {
   getCategoryBySearch(input : string){
     return this.http.get(this.url+"searchCategory/"+input);
   }
+
+  getCategory(id : string){
+    return this.http.get(this.url+"getCategory/"+id);
+  }
 }

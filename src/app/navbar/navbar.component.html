@@ -10,6 +10,33 @@
   <div class="search">
     <input class="searchTerm" (keyup)="showSearchDropDown()" type="text" placeholder="Search Product" [(ngModel)]="input">
     <button class="searchButton"><i class="fa fa-search"></i></button>
+    <br>
+    <div [ngClass]="dropDownClass">
+      <div class="cont">
+      @if(input != ""){
+        <button (click)="showProducts()" [class.btn] = "_showProducts">Products</button>
+        <button (click)="showCategories()" [class.btn] = "_showCategories">Category</button>
+      }
+      @if(_showProducts){
+        
+          @for (product of products; track $index) {
+            <div (click)="showProduct(product)" class="searchOptions">
+              <h4>{{product.name}}</h4>
+              <p>Price: ${{product.price}}</p>
+            </div>
+          }
+        
+      }
+      @if(_showCategories){
+         
+          @for (category of categories; track $index) {
+            <div (click)="showCategory(category)" class="searchOptions">
+              <h3>{{category.name}}</h3>
+            </div>
+          }
+      }
+      </div>
+    </div>
   </div>
   <div class="navbar-buttons">
     <button (click)="home()">Home</button>
@@ -18,28 +45,3 @@
     <button (click)="order()">Order</button>
   </div>
 </nav>
-<div class="search-drop-down">
-  <!-- @if(input != ""){ -->
-    <button (click)="showProducts()">Products</button>
-    <button (click)="showCategories()">Category</button>
-  <!-- } -->
-  @if(_showProducts){
-    <div class="cont">
-      @for (product of products; track $index) {
-        <div (click)="showProduct(product)" class="searchOptions">
-          <h3>{{product.name}}</h3>
-          <p>{{product.price}}</p>
-        </div>
-      }
-    </div>
-  }
-  @if(_showCategories){
-    <div class="cont">
-      @for (category of categories; track $index) {
-        <div (click)="showCategory(category)" class="searchOptions">
-          <h3>{{category.name}}</h3>
-        </div>
-      }
-    </div>
-  }
-</div>

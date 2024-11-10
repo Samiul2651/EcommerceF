@@ -1,35 +1,34 @@
-
 <body>
     <div class="container">
-        <table>
-
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>SubTotal</th>
-              </tr>
-              <tr *ngFor="let product of orders">
-                <td>{{product.name}}
-                    <button (click)="RemoveProductFromCart(product)">Remove</button>
-                </td>
-                <td>{{product.price}}</td>
-                <td>
-                    <p><button (click)="DecreaseQuantity(product)" class="minus" aria-label="Decrease">&minus;</button>
-                    {{product.quantity}}
-                    <button (click)="IncreaseQuantity(product)" class="plus" aria-label="Increase">&plus;</button>
-                    </p>
-                </td>
-                <td><p>${{product.quantity * product.price}}</p></td>
-              </tr>
-        </table>
-
-        <div>
-            <p>Total : {{sum}}</p>
-        </div>
-
-        <a routerLink="/payment" routerLinkActive="active" ariaCurrentWhenActive="page">CheckOut</a>
+      <table class="cart-table">
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+        <tr *ngFor="let product of orders">
+          <td>
+            {{product.name}}
+            <button class="remove-btn" (click)="RemoveProductFromCart(product)">Remove</button>
+          </td>
+          <td>{{product.price | currency}}</td>
+          <td>
+            <p>
+              <button (click)="DecreaseQuantity(product)" class="quantity-btn minus" aria-label="Decrease">&minus;</button>
+              <span>{{product.quantity}}</span>
+              <button (click)="IncreaseQuantity(product)" class="quantity-btn plus" aria-label="Increase">&plus;</button>
+            </p>
+          </td>
+          <td>{{product.quantity * product.price | currency}}</td>
+        </tr>
+      </table>
+  
+      <div class="total-container">
+        <p>Total: {{sum | currency}}</p>
+      </div>
+  
+      <a routerLink="/payment" routerLinkActive="active" ariaCurrentWhenActive="page" class="checkout-btn">CheckOut</a>
     </div>
-
 </body>
-
+  

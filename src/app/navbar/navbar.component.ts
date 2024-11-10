@@ -17,6 +17,7 @@ export class NavbarComponent {
     private categoryService : CategoryService
   ){}
 
+  dropDownClass : string = "search-drop-down-before-search";
   products : Product[] = [];
   categories : Category[] = [];
   home(){
@@ -36,10 +37,17 @@ export class NavbarComponent {
   input = "";
 
   showSearchDropDown(){
+    if(this.input == ""){
+      this.dropDownClass = "search-drop-down-before-search";
+    }
+    else{
+      this.dropDownClass = "search-drop-down";
+    }
     this.products = [];
     this.categories = [];
     if(this._showProducts)this.showProducts();
     else this.showCategories();
+
   }
 
   showProduct(product : Product){
