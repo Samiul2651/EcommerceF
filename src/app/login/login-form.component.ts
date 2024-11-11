@@ -70,7 +70,7 @@ export class LoginComponent {
           localStorage.setItem("email", response.customer.email);
           // console.log(response);
           setTimeout(() => {
-            this.router.navigateByUrl('/product-list');
+            this.router.navigateByUrl('/home');
           }, 2000);
           // this.router.navigateByUrl('/product-list');
         }

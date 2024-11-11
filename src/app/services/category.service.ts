@@ -29,4 +29,8 @@ export class CategoryService {
   getCategory(id : string){
     return this.http.get(this.url+"getCategory/"+id);
   }
+
+  getTopCategories(){
+    return this.http.get(this.url+"getTopCategories");
+  }
 }

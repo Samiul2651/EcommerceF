@@ -60,5 +60,13 @@ export class ProductService {
 
   getProductsByIds(ids : string[]){
     return this.http.post(this.url + 'getProductsByIds', ids);
-  } 
+  }
+
+  upvoteProduct(productId : string, userId : string){
+    return this.http.get(this.url + 'upvoteProduct/'+ productId + '/'  + userId);
+  }
+
+  downvoteProduct(productId : string, userId : string){
+    return this.http.get(this.url + 'downvoteProduct/'+ productId + '/'  + userId);
+  }
 }

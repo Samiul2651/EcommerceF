@@ -44,6 +44,9 @@ export class ProductComponent implements OnInit {
   downVote : string = "Downvote";
   upvoteClass : string = "vote-btn";
   downvoteClass : string = "vote-btn";
+
+  trendingProducts : Product[] = [];
+  trendingCategories : Category[] = [];
   ngOnInit(): void {
     let id : string | null= this.route.snapshot.paramMap.get('id');
     this.productService.getProduct(id ?? "")
@@ -51,7 +54,19 @@ export class ProductComponent implements OnInit {
         this.product = response.product;
         console.log(this.product);
         this.getCategory();
-      }) 
+      })
+    
+    this.productService.getProductsByPage(1)
+      .subscribe((response : any) => {
+        this.trendingProducts = response.products;
+        console.log(this.trendingProducts);
+      })
+    
+    this.categoryService.getTopCategories()
+      .subscribe((response : any) => {
+        this.trendingCategories = response.categories;
+        console.log(this.trendingCategories);
+      })
   }
 
   getCategory(){
@@ -75,18 +90,40 @@ export class ProductComponent implements OnInit {
   }
 
   upvoteProduct(){
+    let user = localStorage.getItem('email');
+    if(user == null || user == ""){
+      alert("Please Login to vote");
+      return;
+    }
     this.upvoteClass = "vote-btn-active";
     this.downvoteClass = "vote-btn";
     this.upvote = "Upvoted";
     this.downVote = "Downvote";
     console.log(this.upvote);
+    let vote = {
+      productId : this.product.id,
+      userId : user
+    };
+    this.productService.upvoteProduct(vote.productId, vote.userId).subscribe();
   }
 
   downvoteProduct(){
+    let user = localStorage.getItem('email');
+    if(user == null || user == ""){
+      alert("Please Login to vote");
+      return;
+    }
     this.upvoteClass = "vote-btn";
     this.downvoteClass = "vote-btn-active";
     this.upvote = "Upvote";
     this.downVote = "Downvoted";
     console.log(this.upvote);
+    let vote = {
+      productId : "",
+      userId : ""
+    };
+    vote.productId = this.product.id;
+    vote.userId = user;
+    this.productService.downvoteProduct(vote.productId, vote.userId).subscribe();
   }
 }
