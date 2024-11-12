@@ -21,10 +21,7 @@
   </div> -->
 
   <div class="container">
-    <div class="left-div">
-      <h3>Top Categories</h3>
-      <p>Some information here.</p>
-    </div>
+    <app-top-categories></app-top-categories>
   
     <div class="product-page">
       <img src="{{product.imageLink}}" alt="Product Image">
@@ -46,11 +43,9 @@
         <button class="add-to-cart-btn" (click)="addProductToCart(product.quantity)">Add to Cart</button>
       </div>
     </div>
-  
     
-    <div class="right-div">
-      <h3>Top Products</h3>
-      <p>Suggestions or advertisements here.</p>
-    </div>
+    <app-top-products></app-top-products>
+    
+    
   </div>
   

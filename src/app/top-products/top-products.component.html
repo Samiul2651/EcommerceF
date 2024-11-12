@@ -1,0 +1,10 @@
+<div class="right-div">
+    <h3>Top Products</h3>
+    
+    @for(product of trendingProducts;track $index;){
+        <div class="product">
+            <p (click)="showProduct(product)">{{product.name}}</p>
+        </div>
+    }
+
+  </div>

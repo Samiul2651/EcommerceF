@@ -23,6 +23,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
+import { TopCategoriesComponent } from './top-categories/top-categories.component';
+import { TopProductsComponent } from './top-products/top-products.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ProductComponent } from './product/product.component';
     NavbarComponent,
     HomeComponent,
     CategoryComponent,
-    ProductComponent
+    ProductComponent,
+    TopCategoriesComponent,
+    TopProductsComponent
   ],
   imports: [
     AlertModule.forRoot(),

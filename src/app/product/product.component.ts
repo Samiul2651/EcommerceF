@@ -45,8 +45,6 @@ export class ProductComponent implements OnInit {
   upvoteClass : string = "vote-btn";
   downvoteClass : string = "vote-btn";
 
-  trendingProducts : Product[] = [];
-  trendingCategories : Category[] = [];
   ngOnInit(): void {
     let id : string | null= this.route.snapshot.paramMap.get('id');
     this.productService.getProduct(id ?? "")
@@ -56,17 +54,8 @@ export class ProductComponent implements OnInit {
         this.getCategory();
       })
     
-    this.productService.getProductsByPage(1)
-      .subscribe((response : any) => {
-        this.trendingProducts = response.products;
-        console.log(this.trendingProducts);
-      })
+    let userId : string | null = localStorage.getItem('email');
     
-    this.categoryService.getTopCategories()
-      .subscribe((response : any) => {
-        this.trendingCategories = response.categories;
-        console.log(this.trendingCategories);
-      })
   }
 
   getCategory(){

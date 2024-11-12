@@ -1,0 +1,9 @@
+<div class="left-div">
+    <h3>Top Categories</h3>
+    @for(category of trendingCategories;track $index;){
+        <div class="product">
+            <p (click)="showCategory(category)">{{category.name}}</p>
+        </div>
+    }
+
+  </div>
