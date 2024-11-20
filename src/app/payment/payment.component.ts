@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-payment',
@@ -67,63 +68,39 @@ export class PaymentComponent {
     
     let order : Order = {
       id : '',
-      customerId : '',
+      customerId : localStorage.getItem('email') ?? "",
+      email : this.email.value ?? '',
       products : [],
       price : 0,
       address : orderAddress,
       phoneNumber : orderPhoneNumber,
       orderTime : currentDate
     };
-    let len = sessionStorage.length;
-    
-    // This needs to be fixed
-    // Object.keys(sessionStorage).forEach((key) =>{
-    //   this.productService.getProduct(key)
-    //   .subscribe((response : any)=>{
-    //     response.product.category = '';
-    //     order.products.push(response.product);
-        
-    //     if(sessionStorage.getItem(response.product.id)){
-    //       response.product.quantity = Number(sessionStorage.getItem(response.product.id));
-    //     }
-    //     order.price += response.product.price * response.product.quantity;
-    //     if(order.products.length == len){
-    //       // console.log(order);
-    //       this.customerService.takeOrder(order)
-    //         .subscribe(response => {
-    //           alert("Payment Successful");
-    //         },error =>{
-    //           alert("Payment Error");
-    //         }
-    //       );
-    //     }
-    //   })
-      
-    // });
-
     let keys : string[] = Object.keys(sessionStorage);
     console.log(keys);
     this.productService.getProductsByIds(keys)
       .subscribe((response : any) => {
         order.products = response.products;
-        order.products.forEach(product => {
+        let products : Product[] = order.products;
+        products.forEach(product => {
           if(sessionStorage.getItem(product.id)){
               product.quantity = Number(sessionStorage.getItem(product.id));
           }
           order.price += product.price * product.quantity;
         });
-        console.log(order);
+        
         this.customerService.takeOrder(order)
-          .subscribe(response => {
-            console.log(order);
-            alert("Payment Successful");
-            this.router.navigateByUrl('product-list');
-          }, error => {
-            alert("Payment Error");
-            this.router.navigateByUrl('order');
-          }
-        )
-
+          .subscribe({
+            next: () => {
+              alert("Payment Successful");
+              this.router.navigateByUrl('product-list');
+            },
+            error: (e) => {
+              console.error(e);
+              alert("Payment Unsuccessful");
+              this.router.navigateByUrl('order');
+            }
+          });
       })
   }
   

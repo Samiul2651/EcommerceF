@@ -61,10 +61,13 @@ export class RegisterComponent {
       password : this.password?.value
     }
     this.authService.register(user)
-      .subscribe(response =>{
+      .subscribe(() =>{
         alert("Registration Successfull");
+        
+        this.router.navigateByUrl('login');
       }, error =>{
         alert("Registration Error");
+        this.router.navigateByUrl('register');
       });
   }
 
