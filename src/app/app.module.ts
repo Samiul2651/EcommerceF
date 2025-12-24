@@ -25,6 +25,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { TopCategoriesComponent } from './top-categories/top-categories.component';
 import { TopProductsComponent } from './top-products/top-products.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TopProductsComponent } from './top-products/top-products.component';
     CategoryComponent,
     ProductComponent,
     TopCategoriesComponent,
-    TopProductsComponent
+    TopProductsComponent,
+    ChatbotComponent
   ],
   imports: [
     AlertModule.forRoot(),

@@ -146,6 +146,10 @@ export class ProductListComponent implements OnInit {
       });
   }
 
+  showProduct(productId : string){
+    this.router.navigate(['/product/', {id : productId}]);
+  }
+
 }
 
 

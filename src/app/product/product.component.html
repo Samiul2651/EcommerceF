@@ -1,51 +1,70 @@
-<!-- <div class="product-page">
-    <img src="{{product.imageLink}}" alt="Product Image">
-    <div class="product-details">
-      <h2>{{product.name}}</h2>
-      <p class="price">${{product.price}}</p>
-      <p class="category">Category: {{category.name}}</p>
-      <p class="type">Type: {{product.type}}</p>
-      <p class="info">Lorem ipsum dolor sit amet, 
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <div class="product-actions">
-      <button [ngClass]="upvoteClass" (click)="upvoteProduct()">{{upvote}}</button>
-      <button [ngClass]="downvoteClass" (click)="downvoteProduct()">{{downVote}}</button>
-    
-      <input type="number" class="quantity-selector" [(ngModel)]="product.quantity" min="1">
-      <button class="add-to-cart-btn" (click)="addProductToCart(product.quantity)">Add to Cart</button>
-    </div>
-  </div> -->
+<div class="container">
+  <app-top-categories></app-top-categories>
 
-  <div class="container">
-    <app-top-categories></app-top-categories>
-  
-    <div class="product-page">
-      <img src="{{product.imageLink}}" alt="Product Image">
-      <div class="product-details">
-        <h2>{{product.name}}</h2>
-        <p class="price">${{product.price}}</p>
-        <p class="category">Category: {{category.name}}</p>
-        <p class="type">Type: {{product.type}}</p>
-        <p class="info">Lorem ipsum dolor sit amet, 
-          consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
-          in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-          officia deserunt mollit anim id est laborum.</p>
+  <div class="product-page">
+    <div class="product-image-wrapper">
+      @if(product.imageLink && product.imageLink !== '') {
+        <img [src]="product.imageLink" [alt]="product.name" class="product-image">
+      } @else {
+        <div class="product-image-placeholder">
+          <i class="bi bi-image"></i>
+          <p>No Image Found</p>
+        </div>
+      }
+    </div>
+
+    <div class="product-content">
+      <div class="product-header">
+        <div class="product-title-section">
+          <h1 class="product-title">{{product.name}}</h1>
+          <div class="product-meta">
+            <span class="category-badge">
+              <i class="bi bi-tag-fill"></i>
+              {{category.name}}
+            </span>
+            <span class="type-badge">
+              <i class="bi bi-box-seam"></i>
+              {{product.type}}
+            </span>
+          </div>
+        </div>
+        <div class="price-section">
+          <p class="price">${{product.price}}</p>
+        </div>
       </div>
-      <div class="product-actions">
-        <button [ngClass]="upvoteClass" (click)="upvoteProduct()">{{upvote}}</button>
-        <button [ngClass]="downvoteClass" (click)="downvoteProduct()">{{downVote}}</button>
-        <input type="number" class="quantity-selector" [(ngModel)]="product.quantity" min="1">
-        <button class="add-to-cart-btn" (click)="addProductToCart(product.quantity)">Add to Cart</button>
+
+      <div class="product-description">
+        <h3>Product Description</h3>
+        <p class="info">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+
+      <div class="voting-section">
+        <h4>Rate this Product</h4>
+        <div class="vote-buttons">
+          <button [ngClass]="upvoteClass" (click)="upvoteProduct()">
+            <i class="bi bi-hand-thumbs-up-fill"></i>
+            {{upvote}}
+          </button>
+          <button [ngClass]="downvoteClass" (click)="downvoteProduct()">
+            <i class="bi bi-hand-thumbs-down-fill"></i>
+            {{downVote}}
+          </button>
+        </div>
+      </div>
+
+      <div class="purchase-section">
+        <div class="quantity-control">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" class="quantity-selector" [(ngModel)]="product.quantity" min="1">
+        </div>
+        <button class="add-to-cart-btn" (click)="addProductToCart(product.quantity)">
+          <i class="bi bi-cart-plus-fill"></i>
+          Add to Cart
+        </button>
       </div>
     </div>
-    
-    <app-top-products></app-top-products>
-    
-    
   </div>
+
+  <app-top-products></app-top-products>
+</div>
   

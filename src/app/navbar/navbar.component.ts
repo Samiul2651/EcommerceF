@@ -20,6 +20,15 @@ export class NavbarComponent {
   dropDownClass : string = "search-drop-down-before-search";
   products : Product[] = [];
   categories : Category[] = [];
+  menuOpen : boolean = false;
+
+  toggleMenu(){
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu(){
+    this.menuOpen = false;
+  }
   home(){
     this.router.navigateByUrl('/product-list');
   }

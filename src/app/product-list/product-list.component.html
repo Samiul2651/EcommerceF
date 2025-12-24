@@ -1,53 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="page-container">
+  <app-top-categories></app-top-categories>
 
-    </head>
-<body>
-<!-- <button><a routerLink="/order" routerLinkActive="active" ariaCurrentWhenActive="page">Order</a></button> -->
-<div class="wrap">
-<div class="search">
-    <input class="searchTerm" type="text" (keyup)="ViewProductList(1)" placeholder="Search Product" [(nng gModel)]="input">
-    <button class="searchButton"><i class="fa fa-search"></i></button>
-</div>
-</div>
-<!-- <button (click)="goBack()">Go Back</button> -->
-<div class="category-cont">
-    @for(category of categories;track $index;){
+  <div class="main-content">
+    <div class="category-cont">
+      @for(category of categories;track $index;){
         <div>
-            <p>
-                <button (click)="showProductsByCategory(category.id)" class="category__btn">{{category.name}}</button>
-            </p>
+          <p>
+            <button (click)="showProductsByCategory(category.id)" class="category__btn">{{category.name}}</button>
+          </p>
         </div>
-    }
-</div>
+      }
+    </div>
 
-<div class="cont">
-    @for (product of products; track $index;){
-        <div class="product-card">
-            <div class="product-card__image">
-            <img src={{product.imageLink}} alt="N/A">
+    <div class="cont">
+      @for (product of products; track $index;){
+        <div class="product-card" (click)="showProduct(product.id)">
+          <div class="product-card__image">
+            @if(product.imageLink && product.imageLink !== '') {
+              <img [src]="product.imageLink" [alt]="product.name">
+            } @else {
+              <div class="product-image-placeholder">
+                <i class="bi bi-image"></i>
+              </div>
+            }
+          </div>
+          <div class="product-card__info">
+            <h2>{{product.name}}</h2>
+            <div class="product-card__price-row">
+              <span class="product-card__price">${{product.price}}</span>
+              <button (click)="addProductToCart(product.id); $event.stopPropagation()" class="product-card__btn">
+                <i class="bi bi-cart-plus-fill"></i>
+                Add to Cart
+              </button>
             </div>
-            <div class="product-card__info">
-                <h2>{{product.name}}</h2>
-                <div class="product-card__price-row">
-                    <span class="product-card__price">${{product.price}}</span>
-                    <button (click)="addProductToCart(product.id)" class="product-card__btn">Add to Cart</button>
-                </div>
-            </div>
+          </div>
         </div>
-        <br>
-    }
-</div>
+      }
+    </div>
 
-<div class="pageList">
-    <button (click)="toPage(1)">1</button>
-    @for(page of pageList;track $index){
+    <div class="pageList">
+      <button (click)="toPage(1)">1</button>
+      @for(page of pageList;track $index){
         <button (click)="toPage(page)">{{page}}</button>
-    }
-</div>
-</body>
-</html>
+      }
+    </div>
+  </div>
 
-<!-- </div> -->
+  <app-top-products></app-top-products>
+</div>

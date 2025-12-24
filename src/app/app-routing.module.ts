@@ -14,6 +14,7 @@ import { CategoryComponent } from './category/category.component';
 
 
 const routes: Routes = [
+  {path: '', redirectTo: '/product-list', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'payment', component: PaymentComponent, canActivate: [authGuard]},

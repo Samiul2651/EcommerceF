@@ -1,0 +1,72 @@
+<!-- Floating Chat Button -->
+<div
+  class="chat-button"
+  [ngStyle]="getButtonStyle()"
+  (mousedown)="onMouseDown($event)"
+  [class.dragging]="isDragging">
+  <i class="bi bi-chat-dots-fill"></i>
+  @if(!isOpen) {
+    <span class="notification-badge">1</span>
+  }
+</div>
+
+<!-- Chat Window -->
+<div class="chat-window" [class.open]="isOpen">
+  <!-- Chat Header -->
+  <div class="chat-header">
+    <div class="chat-header-content">
+      <div class="bot-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="bot-info">
+        <h3>Shopping Assistant</h3>
+        <p class="status">
+          <span class="status-dot"></span>
+          Online
+        </p>
+      </div>
+    </div>
+    <button class="close-chat-btn" (click)="closeChat()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Chat Messages -->
+  <div class="chat-messages">
+    @for(message of messages; track $index) {
+      <div class="message" [class.user-message]="message.isUser" [class.bot-message]="!message.isUser">
+        @if(!message.isUser) {
+          <div class="message-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+        }
+        <div class="message-content">
+          <div class="message-bubble">
+            {{message.text}}
+          </div>
+          <span class="message-time">{{message.timestamp | date:'short'}}</span>
+        </div>
+        @if(message.isUser) {
+          <div class="message-avatar user-avatar">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Chat Input -->
+  <div class="chat-input">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="userMessage"
+        (keypress)="onKeyPress($event)"
+        placeholder="Type your message..."
+        class="message-input">
+      <button class="send-btn" (click)="sendMessage()" [disabled]="userMessage.trim() === ''">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>

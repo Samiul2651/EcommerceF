@@ -5,8 +5,9 @@
 
 <nav class="navbar">
   <div class="navbar-logo">
-    <h1>MyStore</h1>
+    <h1 (click)="home()">MyStore</h1>
   </div>
+
   <div class="search">
     <input class="searchTerm" (keyup)="showSearchDropDown()" type="text" placeholder="Search Product" [(ngModel)]="input">
     <button class="searchButton"><i class="fa fa-search"></i></button>
@@ -18,17 +19,17 @@
         <button (click)="showCategories()" [class.btn] = "_showCategories">Category</button>
       }
       @if(_showProducts){
-        
+
           @for (product of products; track $index) {
             <div (click)="showProduct(product)" class="searchOptions">
               <h4>{{product.name}}</h4>
               <p>Price: ${{product.price}}</p>
             </div>
           }
-        
+
       }
       @if(_showCategories){
-         
+
           @for (category of categories; track $index) {
             <div (click)="showCategory(category)" class="searchOptions">
               <h3>{{category.name}}</h3>
@@ -38,10 +39,47 @@
       </div>
     </div>
   </div>
-  <div class="navbar-buttons">
+
+  <!-- Hamburger Menu Button -->
+  <button class="hamburger" (click)="toggleMenu()" [class.active]="menuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Desktop Navigation -->
+  <div class="navbar-buttons desktop-nav">
     <button (click)="home()">Home</button>
     <button (click)="login()">Log In</button>
     <button (click)="logout()">Log Out</button>
     <button (click)="order()">Order</button>
+  </div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div class="mobile-menu" [class.open]="menuOpen">
+    <div class="mobile-menu-overlay" (click)="closeMenu()"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <h2>Menu</h2>
+      </div>
+      <div class="mobile-menu-items">
+        <button (click)="home(); closeMenu()">
+          <i class="fa fa-home"></i>
+          <span>Home</span>
+        </button>
+        <button (click)="login(); closeMenu()">
+          <i class="fa fa-sign-in"></i>
+          <span>Log In</span>
+        </button>
+        <button (click)="logout(); closeMenu()">
+          <i class="fa fa-sign-out"></i>
+          <span>Log Out</span>
+        </button>
+        <button (click)="order(); closeMenu()">
+          <i class="fa fa-shopping-cart"></i>
+          <span>Order</span>
+        </button>
+      </div>
+    </div>
   </div>
 </nav>
